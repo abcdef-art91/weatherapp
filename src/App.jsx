@@ -200,8 +200,12 @@ export default function App() {
       ) }
       </>
     ) }
-    <Credits />
     <Toast ref={toast} />
+    <footer>
+      <Card>
+        <p style={{textAlign:"center"}}>&copy;Ward Name. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: your SIN number</p>
+      </Card>
+    </footer>
     </>
   )
 }         
