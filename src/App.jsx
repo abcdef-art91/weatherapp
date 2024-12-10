@@ -78,7 +78,7 @@ export default function App() {
 
   return (
     <>
-    <Menubar style={{position:'sticky',top:'8px',backgroundColor:'white'}} start={(
+    <Menubar style={{position:'sticky',top:'0px',backgroundColor:'var(--primary-color)', color:"var(--primary-color-text)", zIndex:1000}} start={(
       <img src={AppIcon} width={32} height={32} />
     )} model={[
       {label:"ICU Zambia",url:"https://www.icuzambia.net"},
@@ -125,6 +125,7 @@ export default function App() {
                   <div 
                     style={{margin:"0px 8px"}}>
                     <Card 
+                      style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}
                       title={item.dt_txt} 
                       subTitle={item.weather[0].description}
                       header={<img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png`} />}>
@@ -201,8 +202,8 @@ export default function App() {
       </>
     ) }
     <Toast ref={toast} />
-    <footer>
-      <Card>
+    <footer style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
+      <Card style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
         <p style={{textAlign:"center"}}>&copy;Ward Name. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: your SIN number</p>
       </Card>
     </footer>
