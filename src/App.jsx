@@ -10,8 +10,13 @@ import {InputIcon} from 'primereact/inputicon'
 import {Menu} from 'primereact/menu'
 import {Toast} from 'primereact/toast'
 import {ProgressSpinner} from 'primereact/progressspinner'
-import { OverlayPanel } from 'primereact/overlaypanel';
+import { OverlayPanel } from 'primereact/overlaypanel'
 import { Carousel } from 'primereact/carousel'
+import { Tooltip } from 'primereact/tooltip'
+import { Chip } from 'primereact/chip'
+import humidityIcon from './assets/images/humidity.png'
+import thermometerIcon from './assets/images/thermometer.png'
+import windIcon from './assets/images/wind.png'
 import SDK from './sdk'
 
 export default function App() {
@@ -29,7 +34,7 @@ export default function App() {
 
   useEffect(function(){
     getWeather()
-  },[])
+  },[city])
 
   function getWeather() {
     setLoading(true)
@@ -93,7 +98,6 @@ export default function App() {
                   lon:city.lon,
                   lat:city.lat
                 })
-                getWeather()
                 var e = new Event("click")
                 searchMenuRef.current.hide(e)
               }
@@ -123,7 +127,30 @@ export default function App() {
                     <Card 
                       title={item.dt_txt} 
                       subTitle={item.weather[0].description}
-                      header={<img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png`} />}></Card>
+                      header={<img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png`} />}>
+                      <Tooltip target='.chip-tool-tip' />
+                      <Chip 
+                        className='chip-tool-tip'
+                        data-pr-tooltip='Temperature'
+                        data-pr-position='bottom'
+                        style={{cursor:"pointer",backgroundColor:"cyan",color:"black",margin:"2px"}}
+                        label={<span>{item.main.temp} &ordm;C</span>} 
+                        image={thermometerIcon} />
+                      <Chip 
+                        className='chip-tool-tip'
+                        data-pr-tooltip='Humidity'
+                        data-pr-position='bottom'
+                        style={{cursor:"pointer",backgroundColor:"indigo",color:"white",margin:"2px"}}
+                        label={<span>{item.main.humidity} g/m&sup3;C</span>} 
+                        image={humidityIcon} />
+                      <Chip 
+                        className='chip-tool-tip'
+                        data-pr-tooltip='Wind speed'
+                        data-pr-position='bottom'
+                        style={{cursor:"pointer",backgroundColor:"orange",color:"black",margin:"2px"}}
+                        label={<span>{item.wind.speed} m/s</span>} 
+                        image={windIcon} />
+                    </Card>
                   </div>
                 )}
                 responsiveOptions={[

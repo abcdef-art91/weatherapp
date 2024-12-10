@@ -66,6 +66,7 @@ class SDK {
     })
     url.setParam({key:"lon",value:lon})
     url.setParam({key:"lat",value:lat})
+    url.setParam({key:"units",value:"metric"})
     return await this.getRequest({url:url})
   }
 
@@ -77,6 +78,7 @@ class SDK {
     })
     url.setParam({key:"lon",value:lon})
     url.setParam({key:"lat",value:lat})
+    url.setParam({key:"units",value:"metric"})
     return await this.getRequest({url:url})
   }
 
@@ -88,6 +90,7 @@ class SDK {
     })
     url.setParam({key:"lon",value:lon})
     url.setParam({key:"lat",value:lat})
+    url.setParam({key:"units",value:"metric"})
     return await this.getRequest({url:url})
   }
 }
