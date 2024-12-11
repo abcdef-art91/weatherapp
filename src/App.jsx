@@ -204,7 +204,7 @@ export default function App() {
     <Toast ref={toast} />
     <footer style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
       <Card style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
-        <p style={{textAlign:"center"}}>&copy;Ward Name. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: your SIN number</p>
+        <p style={{textAlign:"center"}}>&copy;Ward Name. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: 2310373351</p>
       </Card>
     </footer>
     </>
