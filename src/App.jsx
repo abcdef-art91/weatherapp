@@ -121,7 +121,7 @@ export default function App() {
               />
               <Marker position={[city.lat, city.lon]}>
                 <Popup>
-                  A pretty CSS3 popup. <br /> Easily customizable.
+                {weather.city.name}, {weather.city.country}
                 </Popup>
               </Marker>
             </MapContainer>
