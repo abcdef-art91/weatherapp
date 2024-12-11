@@ -13,10 +13,21 @@ import { OverlayPanel } from 'primereact/overlaypanel'
 import { Carousel } from 'primereact/carousel'
 import { Tooltip } from 'primereact/tooltip'
 import { Chip } from 'primereact/chip'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import humidityIcon from './assets/images/humidity.png'
 import thermometerIcon from './assets/images/thermometer.png'
 import windIcon from './assets/images/wind.png'
 import SDK from './sdk'
+
+function TheMap({city}) {
+  const map = useMapEvents({})
+
+  useEffect(()=>{
+    map.flyTo([city.lat,city.lon],13)
+  })
+
+  return null
+}
 
 export default function App() {
   const [weather,setWeather] = useState(null)
@@ -100,7 +111,20 @@ export default function App() {
         <div>
           <div style={{margin:"8px 0px"}}>
             <Card title={weather.city.name}
-            subTitle={weather.city.country}>
+            subTitle={weather.city.country}
+            style={{width:"100%"}}>
+            <MapContainer center={[city.lat, city.lon]} zoom={13} scrollWheelZoom={false} style={{height:"300px"}}>
+              <TheMap city={city} />
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={[city.lat, city.lon]}>
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker>
+            </MapContainer>
             </Card>
           </div>
           <div>
@@ -110,6 +134,7 @@ export default function App() {
                 numVisible={3} 
                 itemTemplate={(item)=>(
                   <div 
+                    key={item.dt}
                     style={{margin:"0px 8px"}}>
                     <Card 
                       style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}
@@ -118,6 +143,7 @@ export default function App() {
                       header={<img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png`} />}>
                       <Tooltip target='.chip-tool-tip' />
                       <Chip 
+                        key={'temp'}
                         className='chip-tool-tip'
                         data-pr-tooltip='Temperature'
                         data-pr-position='bottom'
@@ -125,13 +151,15 @@ export default function App() {
                         label={<span>{item.main.temp} &ordm;C</span>} 
                         image={thermometerIcon} />
                       <Chip 
+                        key={'humidity'}
                         className='chip-tool-tip'
                         data-pr-tooltip='Humidity'
                         data-pr-position='bottom'
                         style={{cursor:"pointer",backgroundColor:"indigo",color:"white",margin:"2px"}}
-                        label={<span>{item.main.humidity} g/m&sup3;C</span>} 
+                        label={<span>{item.main.humidity} g/m&sup3;</span>} 
                         image={humidityIcon} />
                       <Chip 
+                        key={'wind'}
                         className='chip-tool-tip'
                         data-pr-tooltip='Wind speed'
                         data-pr-position='bottom'
@@ -177,7 +205,7 @@ export default function App() {
     <Toast ref={toast} />
     <footer style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
       <Card style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
-        <p style={{textAlign:"center"}}>&copy;Nkwazi. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: 2310373351</p>
+        <p style={{textAlign:"center"}}>&copy;Nkwazi Ward. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: 2310373351</p>
       </Card>
     </footer>
     </>
