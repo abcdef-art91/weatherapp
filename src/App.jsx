@@ -1,6 +1,5 @@
 import { Menubar } from 'primereact/menubar'
 import { useEffect, useRef, useState } from 'react'
-import Credits from './components/credits'
 import AppIcon from './assets/images/weather.png'
 import { Card } from 'primereact/card'
 import {Button} from 'primereact/button'
@@ -49,31 +48,16 @@ export default function App() {
     })
   }
 
-  function searchCity(query,event=null) {
+  function searchCity(query) {
     setLoading(true)
     sdk.geo({q:query}).then((response)=>{
       console.log(response)
       setCities(response)
-      searchMenuRef.current.show(event)
       setLoading(false)
     }).catch((error)=>{
       console.log(error)
       setLoading(false)
     })
-    
-    // sdk.search(query).then(function(response){
-    //   if('error' in response) {
-    //     toast.current.show({ severity: 'error', summary: 'Failed to get weather data', detail: response.error.message })
-    //   } else {
-    //     setCities(response)
-    //     searchMenuRef.current.show(event)
-    //     console.log(response)
-    //   }
-    //   setLoading(false)
-    // }).catch(function(error){
-    //   console.log(error)
-    //   setLoading(false)
-    // })
   }
 
   return (
@@ -85,11 +69,15 @@ export default function App() {
       {label:"ZRDC",url:"https://www.zrdc.org"}
     ]} end={(
       <div style={{display:'flex'}}>
-        <IconField>
-          <InputIcon className={loading ? 'pi pi-spin pi-spinner' : 'pi pi-search'}/>
-          <InputText placeholder="City name or Latitude,Longitude (decimal degree)" ref={inputRef}/>
-        </IconField>
+        <Button onClick={function(e){searchMenuRef.current.toggle(e)}}  icon="pi pi-search" className="p-button-primary" />
         <OverlayPanel ref={searchMenuRef}>
+          <div style={{display:'flex'}}>
+            <IconField>
+              <InputIcon className={loading ? 'pi pi-spin pi-spinner' : 'pi pi-search'}/>
+              <InputText placeholder="City name or Latitude,Longitude (decimal degree)" ref={inputRef}/>
+            </IconField>
+            <Button loading={loading} onClick={function(e){searchCity(inputRef.current.value)}}  icon="pi pi-search" className="p-button-primary" />
+          </div>
           <Menu model={cities.map(function(city){
             return {
               label:city.name,
@@ -104,7 +92,6 @@ export default function App() {
             }
           })} id='select-menu'/>
         </OverlayPanel>
-        <Button onClick={function(e){searchCity(inputRef.current.value,e)}}  icon="pi pi-search" className="p-button-primary" />
         
       </div>
     )} />
@@ -172,20 +159,6 @@ export default function App() {
                     numVisible:4
                   }
                 ]} />
-              {/* <div style={{display:"flex",flexDirection:"row",gap:"8px",justifyContent:"center",flexWrap:"wrap"}}>
-                {weather.list.map(function(forecast){
-                  return (
-                    <Card header={(
-                      <img src={day.day.condition.icon} width={50} />
-                    )} title={day.day.condition.text} subTitle={(
-                      <ul>
-                        <li>{day.date}</li>
-                        <li>{day.day.mintemp_c} ℃ - {day.day.maxtemp_c} ℃</li>
-                      </ul>
-                    )} style={{width:200}}></Card>
-                  )
-                })}
-              </div> */}
             </Card>
           </div>
         </div>
@@ -204,7 +177,7 @@ export default function App() {
     <Toast ref={toast} />
     <footer style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
       <Card style={{backgroundColor:"var(--primary-color)",color:"var(--primary-color-text)"}}>
-        <p style={{textAlign:"center"}}>&copy;Ward Name. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: 2310373351</p>
+        <p style={{textAlign:"center"}}>&copy;Nkwazi. All Rights Reserved. Designed and Maintained By Moses Mwape, SIN: 2310373351</p>
       </Card>
     </footer>
     </>
